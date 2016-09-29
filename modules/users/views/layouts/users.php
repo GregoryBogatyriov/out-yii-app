@@ -7,7 +7,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\bootstrap\Modal;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\LtAppAsset;
@@ -23,7 +22,7 @@ LtAppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 				<?= Html::csrfMetaTags() ?>
-        <title>Отзывы | <?= Html::encode($this->title) ?></title>
+        <title>Список пользователей | <?= Html::encode($this->title) ?></title>
 				<?php $this->head() ?>
 
         
@@ -45,7 +44,7 @@ LtAppAsset::register($this);
 						</li>
 <?php if (!Yii::$app->user-> isGuest){?>
 						<li class="pull-right">
-							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
+							<a href="<?= Url::to(['/reviews/reviews']);?>"><strong>Отзывы</strong></a>
 						</li>
 						<li class="pull-right">
 							<a href="<?=Url::to(['/site/logout'])?>">Вы авторизованы как <strong><?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
@@ -118,18 +117,9 @@ LtAppAsset::register($this);
 		    		</div>
 		    	</div>
 		    </div>
-	    </div><!--/footer-->
-			
-			<?php
-				Modal::begin([
-					
-					'header'=> '<h2>Контакты автора отзыва</h2>',
-					'id'=> 'author-contact',
-					'footer'=>' <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>',
-				]);
-				
-				Modal::end();
-			?>
+	    </div>
+
+        <!-- Javascripts -->
         
 		<?php $this->endBody() ?>
     </body>

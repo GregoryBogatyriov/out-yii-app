@@ -33,6 +33,7 @@ class AppAsset extends AssetBundle
 				'js/jquery.sequence-min.js',
 				'js/jquery.bxslider.js',
 				'js/main-menu.js',
+				'js/main.js',
 				//'js/template.js'
     ];
     public $depends = [

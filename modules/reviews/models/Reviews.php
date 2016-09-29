@@ -3,6 +3,10 @@
 namespace app\modules\reviews\models;
 
 use Yii;
+use \yii\db\ActiveRecord;
+use app\modules\users\models\Users;
+use yii\grid\GridView;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "reviews".
@@ -16,7 +20,7 @@ use Yii;
  * @property string $id_author
  * @property string $date_create
  */
-class Reviews extends \yii\db\ActiveRecord
+class Reviews extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -25,14 +29,19 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return 'reviews';
     }
-
+		
+		/*Связь с таблицей Users. Вернётся объект*/
+		public function getUsers(){
+			return $this-> hasOne(Users::className(), ['id'=> 'id_author']);
+		}
+		
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_city', 'title', 'text', 'rating', 'img', 'id_author', 'date_create'], 'required'],
+            [['id_city', 'title', 'text', 'rating', ], 'required'],
             [['id_city', 'rating', 'img', 'id_author'], 'integer'],
             [['text'], 'string'],
             [['date_create'], 'safe'],
@@ -46,14 +55,20 @@ class Reviews extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Номер',
             'id_city' => 'Id City',
-            'title' => 'Title',
-            'text' => 'Text',
-            'rating' => 'Rating',
+            'title' => 'Тема отзыва',
+            'text' => 'Текст',
+            'rating' => 'Рейтинг',
             //'img' => 'Img',
             //'id_author' => 'Id Author',
-            //'date_create' => 'Date Create',
+            'date_create' => 'Отзыв написан',
+						'users.username'=>'Автор отзыва'
         ];
     }
+		
+		/*Метод для добавления имени текущего пользователя*/
+		public function addAuthor($username, $id_author){
+			
+		}
 }

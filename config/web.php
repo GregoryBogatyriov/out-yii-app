@@ -12,7 +12,11 @@ $config = [
         'reviews' => [
             'class' => 'app\modules\reviews\Module',
 						'layout'=> 'reviews',
-						//'defaultRoute' => 'reviews/index',
+						'defaultRoute' => 'reviews/index',
+        ],
+				'users' => [
+            'class' => 'app\modules\users\Module',
+						'layout'=> 'users',
         ],
     ],
     'components' => [

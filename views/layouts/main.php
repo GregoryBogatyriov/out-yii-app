@@ -54,7 +54,7 @@ LtAppAsset::register($this);
 						</li>
 <?}else {?>
 						<li class="pull-right">
-							<a href="<?= Url::to(['/reviews/reviews']);?>"><strong>Отзывы</strong></a>
+							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
 						</li>
 						<li class="pull-right">
 							<a href="<?= Url::to(['/site/login']);?>"><strong>Залогиниться</strong></a>

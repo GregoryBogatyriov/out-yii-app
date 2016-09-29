@@ -55,5 +55,35 @@ $(document).ready(function(){
 		$('.col-footer:eq(0), .col-footer:eq(1)').css('height', footerColHeight);
 	});
 	$( window ).resize();
+	
+	
+	/*Функция для модального окна*/
+	$('.authorreviews').on('click', function(){
+		e.preventDefault();
+		var id_author = $(this).data('id_author')
+		
+		$.ajax({
+			url: '/reviews/reviews/contacts-modal',
+			data: {id_author: id_author},
+			type: 'GET',
+			success: function(res){
+				console.log(res);
+			},
+			error: function(){
+				alert('Error');
+			}
+		});
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 });

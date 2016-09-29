@@ -1,3 +1,6 @@
+#except of db.php
+/config/db.php
+
 # phpstorm project files
 .idea
 

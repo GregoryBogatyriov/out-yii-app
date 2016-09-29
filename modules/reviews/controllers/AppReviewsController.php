@@ -20,9 +20,14 @@ class AppReviewsController extends Controller
                     [
 												'allow' => true,
                         'roles' => ['@'],
+												'actions'=> [
+													'delete'=> ['POST'],
+													'index', 'view', '_view', 'view_index', 'update', '_index', 'delete', 'authorreviews', 'create', 'contactmodal'
+												],
+												
                     ],
                     [
-                        'actions'=> ['index', 'view'],
+                        'actions'=> ['index', 'view', '_view','view_index', '_index', 'authorreviews', 'contactmodal'],
 												'allow' => true,
                         'roles' => ['?'],
                     ],
