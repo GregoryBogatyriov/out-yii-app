@@ -5,6 +5,7 @@ namespace app\modules\reviews\models;
 use Yii;
 use \yii\db\ActiveRecord;
 use app\modules\users\models\Users;
+use app\modules\cityes\models\City;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -22,9 +23,20 @@ use yii\data\ActiveDataProvider;
  */
 class Reviews extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    public $image;
+    public $images;
+		//public $id_city;
+		
+		public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+		
+		
     public static function tableName()
     {
         return 'reviews';
@@ -35,9 +47,12 @@ class Reviews extends ActiveRecord
 			return $this-> hasOne(Users::className(), ['id'=> 'id_author']);
 		}
 		
-    /**
-     * @inheritdoc
-     */
+		/*Связь с таблицей geo_cities*/
+		public function getCity(){
+			return $this-> hasOne(City::className(), ['city_id'=>'id_city']);
+		}
+		
+    
     public function rules()
     {
         return [
@@ -46,6 +61,8 @@ class Reviews extends ActiveRecord
             [['text'], 'string'],
             [['date_create'], 'safe'],
             [['title'], 'string', 'max' => 255],
+						[['image'], 'file', 'extensions' => 'png, jpg'],
+						//[['images'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
     }
 
@@ -60,11 +77,56 @@ class Reviews extends ActiveRecord
             'title' => 'Тема отзыва',
             'text' => 'Текст',
             'rating' => 'Рейтинг',
-            //'img' => 'Img',
+            'image' => 'Картинка',
+            'images' => 'Изображения',
             //'id_author' => 'Id Author',
             'date_create' => 'Отзыв написан',
-						'users.username'=>'Автор отзыва'
+						'users.username'=>'Автор отзыва',
+						'reviews.id_city'=>'Номер города',
         ];
+    }
+		
+		
+		/*Метод для загрузки картинки*/
+		public function upload()
+    {
+        if ($this->validate()) {
+            $path = 'upload/store/' . $this->image->baseName .'.'. $this->image->extension ;
+						
+						$this->image->saveAs($path );
+						
+						$this->attachImage($path, true);
+						
+						@unlink ($path);
+						
+            return true;
+        } else {
+            return false;
+        }
+    }
+		
+		
+		/*Метод для загрузки нескольких картинок*/
+		public function uploadImages()
+    {
+        if ($this->validate()) {
+            foreach ($this->images as $file){
+							
+							$path = 'upload/store/' . $file->baseName .'.'. $file->extension;
+						
+							$file->saveAs($path);
+							
+							$this->attachImage($path);
+							
+							@unlink ($path);
+						}
+						
+						
+						
+            return true;
+        } else {
+            return false;
+        }
     }
 		
 		/*Метод для добавления имени текущего пользователя*/

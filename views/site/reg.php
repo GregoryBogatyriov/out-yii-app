@@ -6,6 +6,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
+use yii\captcha\CaptchaAction;
 
 $this->title = ' Регистрация';
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,8 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 				
         <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+				
+        <?= $form->field($model, 'phone')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
+				
+				<?= $form->field($model, 'captcha')->widget(Captcha::className(),['captchaAction'=> '/site/captcha'] ) ?>
 
 
         <div class="form-group">

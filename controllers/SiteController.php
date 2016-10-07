@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Request;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use app\models\LoginForm;
@@ -53,6 +54,9 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+								'backColor'=>111222,
+								'foreColor'=>99,
+								'offset'=>2,
             ],
         ];
     }

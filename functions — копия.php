@@ -1,7 +1,9 @@
-<?php
+<?
 use app\modules\cityes\models\City;
 use app\modules\cityes\models\Base;
-	
+?>
+
+<?php
 	
 	/*Функция для распечатки массива*/
 	function debug($arr){

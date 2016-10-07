@@ -31,6 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p class="btn-danger"><strong>Чтобы оставлять отзывы, а также редактировать их и удалять, вам необходимо войти в свой профиль или зарегистрироваться</strong></p>
 				<?php }?>
    
+		<?php $img = $model->getImage();?>
+		<?php $gallery = $model->getImages();
+		//debug($gallery);?>
 		
 		<?= DetailView::widget([
         'model' => $model,
@@ -42,7 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
 							'format' => 'raw',
 						],
             'title',
-            'text:ntext',
+            'text:html',
+            //'image',
+						[
+							'attribute'=> 'image',
+							'value'=> "<img src='{$img->getUrl()}'>",
+							'format'=>'html',
+						],
 						'users.email',
 						'users.phone',
             'date_create',

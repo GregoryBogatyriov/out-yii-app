@@ -8,6 +8,7 @@ $(document).ready(function(){
 	
 	
 	
+	
 	/*Функция для модального окна*/
 	$('.authorreviews').on('click', function(e){
 		e.preventDefault();
@@ -23,13 +24,80 @@ $(document).ready(function(){
 					alert('Ошибка!');
 				else 
 					//console.log(res);
-					showContact(res);// Вывод информации в модальном 
+					showContact(res);// Вывод информации в модальном окне
 			},
 			error: function(){
 				alert('Error');
 			}
 		});
 	});
+	
+	
+	/*Функция для вставки информации в модальное окно. В качестве параметра передаём название вида*/
+	function showConfirm(confirm){
+		$('#button-confirm .modal-body').html(confirm);
+		$('#button-confirm').modal();
+	}
+	
+	
+	/*Модальное окно для подтверждения ip*/
+	 $('.confirm-button').on('click', function(e){
+		e.preventDefault();
+		var city = $(this).data('city')
+		
+		$.ajax({
+			url: '/cityes/cityes/confirm',
+			data: {city: city},
+			type: 'GET',
+			success: function(res){
+				if (!res) {alert('Ошибка!');}
+				else //console.log(res);
+				showConfirm(res);// Вывод информации в модальном окне
+				setTimeout(function() {window.location.reload();}, 1000);
+			},
+			error: function(){
+				alert('Error');
+			}
+		});
+		
+		
+	}); 
+	
+	
+	
+	
+	
+	/*Функция для вставки информации в модальное окно. В качестве параметра передаём название вида*/
+	function showConfirm(negative){
+		$('#button-negative .modal-body').html(negative);
+		$('#button-negative').modal();
+	}
+	
+	
+	/*Модальное окно для подтверждения ip*/
+	 $('.negative-button').on('click', function(e){
+		e.preventDefault();
+		var city = $(this).data('city')
+		
+		$.ajax({
+			url: '/cityes/cityes/negative',
+			data: {city: city},
+			type: 'GET',
+			success: function(res){
+				if (!res) {alert('Ошибка!');}
+				else 
+				showConfirm(res);// Вывод информации в модальном окне
+			},
+			error: function(){
+				alert('Error');
+			}
+		});
+		
+		
+	}); 
+	
+	
+	
 	
 });
 

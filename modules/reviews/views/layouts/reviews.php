@@ -43,29 +43,55 @@ LtAppAsset::register($this);
 						<li>
 							<a href="#">Пользователи</a>
 						</li>
-<?php if (!Yii::$app->user-> isGuest){?>
+					<?php if($_SESSION['id']):?>
+						<li>
+							<a href="<?= Url::to(['/cityes/cityes/index']);?>"><strong>Ваш город: <?=$_SESSION['city']?></strong></a>
+						</li>
+					<?php else:?>	
+						<li>
+								<a href="<?= Url::to(['/cityes/cityes/index']);?>"><div class="alert-danger"><strong>Выберите ваш город!</strong></div></a>
+						</li>
+					<?php endif;?>
+					
+					<?php if (!Yii::$app->user-> isGuest){?>
 						<li class="pull-right">
 							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
 						</li>
 						<li class="pull-right">
-							<a href="<?=Url::to(['/site/logout'])?>">Вы авторизованы как <strong><?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
+							<a href="<?=Url::to(['/site/logout'])?>">Ваше имя: <strong><?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
 						</li>
-<?php } else {?>
-						
+					<?php } else {?>
 						<li class="pull-right">
 							<a href="<?= Url::to(['/site/login']);?>"><strong>Залогиниться</strong></a>
 						</li>
 						<li class="pull-right">
 							<a href="<?= Url::to(['#']);?>"><strong>Зарегиться</strong></a>
 						</li>
-<?php } ?>
+					<?php } ?>
 						
 					</ul>
 				</nav>
+				
+				
 			</div>
 		</div>
 
       <div class="container">
+				<!--Пропишем условие, при котором будет выводиться флэш-сообщение о передаче информации о заказе на сервер или об ошибке-->
+				<?php if( Yii::$app->session->hasFlash('success') ): ?>
+						<div class="alert alert-success alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<?php echo Yii::$app->session->getFlash('success'); ?>
+						</div>
+				<?php endif;?>
+				<!--Если ошибка, то:-->
+				<?php if( Yii::$app->session->hasFlash('error') ): ?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <?php echo Yii::$app->session->getFlash('error'); ?>
+        </div>
+    <?php endif;?>
+				
 				<?= $content;?>
 			</div>
 			

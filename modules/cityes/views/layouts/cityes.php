@@ -19,10 +19,11 @@ LtAppAsset::register($this);
 <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
 		<head>
+				<?= Html::csrfMetaTags();?>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 				<?= Html::csrfMetaTags() ?>
-        <title>Тестовое задание | <?= Html::encode($this->title) ?></title>
+        <title>Список пользователей | <?= Html::encode($this->title) ?></title>
 				<?php $this->head() ?>
 
         
@@ -39,13 +40,9 @@ LtAppAsset::register($this);
 				<nav id="mainmenu" class="mainmenu">
 					<ul>
 						<li class="logo-wrapper"><a href="<?= Url::to(['/site/index']);?>"><img src="/images/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
-						
 						<li>
 							<a href="#">Пользователи</a>
-						</li>	
-						<?$session = Yii::$app->session;
-						$session-> open();?>
-					<?//debug ($_SESSION)?>
+						</li>
 					<?php if($_SESSION['id']):?>
 						<li>
 							<a href="<?= Url::to(['/cityes/cityes/index']);?>"><strong>Ваш город: <?=$_SESSION['city']?></strong></a>
@@ -55,15 +52,14 @@ LtAppAsset::register($this);
 								<a href="<?= Url::to(['/cityes/cityes/index']);?>"><div class="alert-danger"><strong>Выберите ваш город!</strong></div></a>
 						</li>
 					<?php endif;?>
-					
 <?php if (!Yii::$app->user-> isGuest){?>
 						<li class="pull-right">
 							<a href="<?= Url::to(['/reviews/reviews']);?>"><strong>Отзывы</strong></a>
 						</li>
 						<li class="pull-right">
-							<a href="<?=Url::to(['/site/logout'])?>">Ваше имя: <strong> <?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
+							<a href="<?=Url::to(['/site/logout'])?>">Ваше имя:  <strong><?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
 						</li>
-<?}else {?>
+<?php } else {?>
 						<li class="pull-right">
 							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
 						</li>
@@ -71,17 +67,19 @@ LtAppAsset::register($this);
 							<a href="<?= Url::to(['/site/login']);?>"><strong>Залогиниться</strong></a>
 						</li>
 						<li class="pull-right">
-							<a href="<?= Url::to(['/site/reg']);?>"><strong>Зарегиться</strong></a>
+							<a href="<?= Url::to(['#']);?>"><strong>Зарегиться</strong></a>
 						</li>
-<?} ?>
+<?php } ?>
 						
 					</ul>
 				</nav>
 			</div>
 		</div>
 
-        
-			<?= $content;?>
+      <div class="container">
+				<?= $content;?>
+			</div>
+			
 
 	    <!-- Footer -->
 	    <div class="footer">
@@ -133,7 +131,28 @@ LtAppAsset::register($this);
 		    </div>
 	    </div>
 
-        <!-- Javascripts -->
+      <?php
+				Modal::begin([
+					
+					'header'=> '<h3>Подтверждение</h3>',
+					'id'=> 'button-confirm',
+					'footer'=>' <button type="button" class="btn btn-default" data-dismiss="modal">Продолжить</button>',
+				]);
+				
+				Modal::end();
+			?>
+			
+			
+      <?php
+				Modal::begin([
+					
+					'header'=> '<h3>Выбор города</h3>',
+					'id'=> 'button-negative',
+					//'footer'=>' <a href="/cityes/cityes/confirm?city=Ижевск" class="btn btn-default confirm-select-city" >Продолжить</a>',
+				]);
+				
+				Modal::end();
+			?>
         
 		<?php $this->endBody() ?>
     </body>

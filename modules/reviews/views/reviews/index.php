@@ -17,11 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 		
 		
-		<?php /* foreach ($reviews as $review){
-			echo $review->title . '<br>';
-		} */?>
 		
-		<?//debug ($reviews)?>
+		
+		<?//debug ($users->username)?>
 		
     <p>
         <?php if (!Yii::$app->user-> isGuest){?>
@@ -48,10 +46,17 @@ $this->params['breadcrumbs'][] = $this->title;
 							'format' => 'raw',
 						],
 						//'users.username',
-            'id_city',
+						//'users.id',
+            //'id_city',
+						[
+							'attribute'=> 'id_city',
+							
+						],
             'title',
-            'text:ntext',
+            'text:html',
             'rating',
+            'image',
+            //'gallery',
 						
 						
 

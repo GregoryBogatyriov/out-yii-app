@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use app\modules\users\models\Users;
+use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\reviews\models\Reviews */
@@ -16,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 		
-		<?//= Yii:: $app-> user-> identity['username']?>
 
 		
 		
@@ -30,17 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-				<?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+				<?
+					echo $form->field($model, 'text')->widget(CKEditor::className(), [
+						'editorOptions' => 
+								ElFinder::ckeditorOptions('elfinder',[]),
+					]);
+				?>
 
 				<?= $form->field($model, 'rating')->textInput(['maxlength' => true]) ?>
 
-				<?//= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
 
 				<?= $form->field($model, 'id_author')->textInput(['maxlength' => true, 'value'=> Yii:: $app->user->identity['id'], 'readonly'=>true ]) ?>
 
 				<?= $form->field($model, 'id_city')->textInput() ?>
 				
-				<?//= $form->field($model, 'date_create')->textInput() ?>
+				<?= $form->field($model, 'image')->fileInput() ?>
+				<!--Для нескольких картинок-->
+				<?//= $form->field($model, 'images[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 				
 				<div class="form-group">
 						<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

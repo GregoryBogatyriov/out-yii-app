@@ -16,17 +16,24 @@ class RegForm extends Model
     public $username;
     public $email;
     public $password;
+    public $phone;
+    public $captcha;
+		
+		public $backColor;
 
 
-
-    /**
-     * @return array the validation rules.
-     */
+    /* public function actions(){
+			return [
+				['captcha', ['backColor'=> 'black']],
+			];
+		} */
+		
+		
     public function rules()
     {
         return [
-            [['username','email', 'password'], 'filter', 'filter'=> trim],
-            [['username','email', 'password'], 'required'],
+            [['username','email', 'password', 'captcha'], 'filter', 'filter'=> trim],
+            [['username','email', 'password', 'phone', 'captcha'], 'required'],
             ['username', 'string', 'min'=> 2, 'max'=> 255],
             ['password', 'string', 'min'=> 6, 'max'=> 255],
             ['username', 'unique',
@@ -38,6 +45,12 @@ class RegForm extends Model
 							'targetClass'=> User::className(),
 							'message'=> 'Эта почта уже занята!',	
 						],
+						['phone', 'string', 'min'=>4, 'max'=> 20],
+						['phone', 'unique', 
+							'targetClass'=> User::className(),
+							'message'=> 'Такой телефон уже занят!',
+						],
+						['captcha', 'captcha'],
         ];
     }
 		
@@ -45,7 +58,9 @@ class RegForm extends Model
 			return [
 				'username'=> 'Логин',
 				'email'=> 'Эл. почта',
+				'phone'=> 'Телефон',
 				'password'=> 'Пароль',
+				'captcha'=> 'Подтвердите код',
 			];
 			
 		}
