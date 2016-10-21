@@ -16,17 +16,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 		
 		
+				<?php if( Yii::$app->session->hasFlash('success') ): ?>
+						<div class="alert alert-success alert-dismissible" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<?php echo Yii::$app->session->getFlash('success'); ?>
+						</div>
+				<?php elseif( Yii::$app->session->hasFlash('error') ): ?>
+					<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<?php echo Yii::$app->session->getFlash('error'); ?>
+					</div>
+				<?php endif;?>
 		
-		
-		
-		<?//debug ($users->username)?>
 		
     <p>
-        <?php if (!Yii::$app->user-> isGuest){?>
+        <?php if (!Yii::$app->user-> isGuest):?>
 					<?= Html::a('Оставить отзыв', ['create'], ['class' => 'btn btn-success']) ?>
-				<?php }else {?>
+				<?php else :?>
 					<p class="btn-danger"><strong>Чтобы оставлять отзывы, а также редактировать их и удалять, вам необходимо войти в свой профиль или зарегистрироваться</strong></p>
-				<?php }?>
+				<?php endif;?>
     </p>
 		
 		
@@ -36,8 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 						/*Поля таблицы отзывов:  автор отзыва,тема отзыва, текст отзыва, иконки для просмотра, редактирования, удаления отзыва*/
             
-						//'id',
-						//'id_author',
 						[
 							'attribute'=> 'users.username',
 							'value'=> function ($data){
@@ -45,18 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 							'format' => 'raw',
 						],
-						//'users.username',
-						//'users.id',
-            //'id_city',
 						[
-							'attribute'=> 'id_city',
-							
+							'attribute'=>'city.city',
 						],
             'title',
             'text:html',
-            'rating',
+            //'rating',
             'image',
-            //'gallery',
 						
 						
 
@@ -64,12 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 							'class' => 'yii\grid\ActionColumn',
 							'header'=>'Действия',
-							'template' => !Yii::$app->user-> isGuest ? "{view}{update} {delete}{link}" :  "{view}{link}" ,
+							'template' => !Yii::$app->user-> isGuest &&  Yii::$app->user->identity['id'] == '13' ? "{view}{update} {delete}{link}" :  "{view}{link}" ,
 						],
 						
         ],
 				
-    ]); ?>
-		
+    ]); ?><!--End GridView-->
 		
 </div>

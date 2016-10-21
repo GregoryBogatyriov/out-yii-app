@@ -58,7 +58,7 @@ LtAppAsset::register($this);
 					
 <?php if (!Yii::$app->user-> isGuest){?>
 						<li class="pull-right">
-							<a href="<?= Url::to(['/reviews/reviews']);?>"><strong>Отзывы</strong></a>
+							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
 						</li>
 						<li class="pull-right">
 							<a href="<?=Url::to(['/site/logout'])?>">Ваше имя: <strong> <?= Yii:: $app-> user-> identity['username']?></strong>(выход)</a>
@@ -91,19 +91,19 @@ LtAppAsset::register($this);
 		    			<h3>Our Latest Work</h3>
 		    			<div class="portfolio-item">
 							<div class="portfolio-image">
-								<a href="page-portfolio-item.html"><img src="/images/portfolio6.jpg" alt="Project Name"></a>
+								<a href="#"><img src="/images/portfolio6.jpg" alt="Project Name"></a>
 							</div>
 						</div>
 		    		</div>
 		    		<div class="col-footer col-md-3 col-xs-6">
 		    			<h3>Navigate</h3>
 		    			<ul class="no-list-style footer-navigate-section">
-		    				<li><a href="page-blog-posts.html">Blog</a></li>
-		    				<li><a href="page-portfolio-3-columns-2.html">Portfolio</a></li>
-		    				<li><a href="page-products-3-columns.html">eShop</a></li>
-		    				<li><a href="page-services-3-columns.html">Services</a></li>
-		    				<li><a href="page-pricing.html">Pricing</a></li>
-		    				<li><a href="page-faq.html">FAQ</a></li>
+		    				<li><a href="#">Blog</a></li>
+		    				<li><a href="#">Portfolio</a></li>
+		    				<li><a href="#">eShop</a></li>
+		    				<li><a href="#">Services</a></li>
+		    				<li><a href="#">Pricing</a></li>
+		    				<li><a href="#">FAQ</a></li>
 		    			</ul>
 		    		</div>
 		    		
@@ -113,7 +113,7 @@ LtAppAsset::register($this);
 	        				<b>Address:</b> 123 Fake Street, LN1 2ST, London, United Kingdom<br/>
 	        				<b>Phone:</b> +44 123 654321<br/>
 	        				<b>Fax:</b> +44 123 654321<br/>
-	        				<b>Email:</b> <a href="mailto:getintoutch@yourcompanydomain.com">getintoutch@yourcompanydomain.com</a>
+	        				<b>Email:</b> <a href="#">getintoutch@yourcompanydomain.com</a>
 	        			</p>
 		    		</div>
 		    		<div class="col-footer col-md-2 col-xs-6">
@@ -131,7 +131,7 @@ LtAppAsset::register($this);
 		    		</div>
 		    	</div>
 		    </div>
-	    </div>
+	    </div><!--/ Footer -->
 
         <!-- Javascripts -->
         

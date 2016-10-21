@@ -6,6 +6,7 @@ use Yii;
 use \yii\db\ActiveRecord;
 use app\modules\users\models\Users;
 use app\modules\cityes\models\City;
+use app\modules\reviews\models\Rating;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -42,17 +43,23 @@ class Reviews extends ActiveRecord
         return 'reviews';
     }
 		
-		/*Связь с таблицей Users. Вернётся объект*/
+		/*Связь с моделью Users. Вернётся объект*/
 		public function getUsers(){
 			return $this-> hasOne(Users::className(), ['id'=> 'id_author']);
 		}
 		
-		/*Связь с таблицей geo_cities*/
+		/*Связь с моделью geo_cities*/
 		public function getCity(){
 			return $this-> hasOne(City::className(), ['city_id'=>'id_city']);
 		}
 		
+		/*Связь с моделью rating*/
+		public function getRating(){
+			return $this-> hasMany(Rating::className(), ['id_review'=>'id']);
+		}
     
+		
+		
     public function rules()
     {
         return [
@@ -62,7 +69,6 @@ class Reviews extends ActiveRecord
             [['date_create'], 'safe'],
             [['title'], 'string', 'max' => 255],
 						[['image'], 'file', 'extensions' => 'png, jpg'],
-						//[['images'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 4],
         ];
     }
 
@@ -76,12 +82,13 @@ class Reviews extends ActiveRecord
             'id_city' => 'Id City',
             'title' => 'Тема отзыва',
             'text' => 'Текст',
-            'rating' => 'Рейтинг',
+            //'rating' => 'Рейтинг',
             'image' => 'Картинка',
             'images' => 'Изображения',
-            //'id_author' => 'Id Author',
             'date_create' => 'Отзыв написан',
 						'users.username'=>'Автор отзыва',
+						'city.city_id'=>'номер города',
+						'city.city'=>'Город',
 						'reviews.id_city'=>'Номер города',
         ];
     }

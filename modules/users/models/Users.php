@@ -5,6 +5,7 @@ namespace app\modules\users\models;
 use Yii;
 use \yii\db\ActiveRecord;
 use app\modules\reviews\models\Reviews;
+use app\modules\reviews\models\Rating;
 
 /**
  * This is the model class for table "users".
@@ -30,10 +31,18 @@ class Users extends ActiveRecord
         return 'users';
     }
 		
-		/*Связь с таблицей Reviews. Возвращает массив отзывов*/
+		/*Связь с моделью Reviews. Возвращает массив отзывов*/
 		public function getReviews(){
 			return $this->hasMany(Reviews::className(), ['id_author'=>'id']);
 		}
+		
+		
+		/*Связь с моделью Rating. Возвращает массив*/
+		public function getRating(){
+			return $this-> hasMany(Rating::className(), ['id_author'=>'id']);
+		}
+		
+		
 
     /**
      * @inheritdoc

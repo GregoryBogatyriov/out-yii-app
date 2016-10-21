@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use app\modules\cityes\models\Base;
 use app\modules\cityes\models\City;
 use app\modules\reviews\models\Reviews;
+use app\modules\users\models\Users;
 //use app\modules\cityes\models\Sess;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -46,23 +47,24 @@ class CityesController extends Controller
     public function actionIndex()
     {
 				//$ip = Yii::$app->request->userIP; // получаем ip адрес
-				$ip = '78.85.5.78';// Вставляем тестовый ip
+				$ip = '78.85.6.10';// Если Вставляем готовый ip
 
 				$data = get_data1($ip); // запускаем функцию и получем данные
 				
+				
 				/*Условие, по которому уничтожаются данные из сессии*/
-				$new = $_SESSION['time'] + 15;
+				$new = $_SESSION['time'] + 30;// Через 30 секунд
 				
 				if(isset($_SESSION['city']) && time()>= $new){
 							$session = Yii::$app->session;
 							$session->open();
-							$session->remove('city');
-							$session->remove('time');
-							$session->remove('id');
-							//$session-> destroy();
+							//$session->remove('city');
+							//$session->remove('time');
+							//$session->remove('id');
+							$session-> destroy();
 				}
 				
-				return $this->render('index', compact( 'data', 'new'));
+				return $this->render('index', compact( 'data', 'new', 'ip'));
     }
 		
 		

@@ -20,7 +20,8 @@ use app\modules\users\models\Users;
 	<div class="table table-responsive" style="margin-top:80px; margin-bottom: 60px">
 		<table class="table table-hover table-striped" style="border: 3px #cfcfcf solid">
 			<thead>
-		<?foreach ($reviews as $review=>$value):?>
+		<? foreach ($reviews as $review=>$value):?>
+			<tbody>	
 					<tr>
 						<th><h3>Контакты пользователя <?= $value->users-> username?> </h3></th>
 						<th></th>
@@ -37,6 +38,7 @@ use app\modules\users\models\Users;
 		</table>
 		
 		<a href="/reviews/reviews/authorreviews?id_author=<?=$value-> users->id?>">Посмотреть все отзывы</a>
+		<?die;?>
 		<?endforeach;?>
 		
 	</div>

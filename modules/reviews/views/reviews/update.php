@@ -18,6 +18,8 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="reviews-update">
     <h1><?= Html::encode($this->title) ?></h1>
 
+<? if(Yii::$app->user->identity['id'] == $model-> id_author) :?>			
+		
 		<div class="reviews-form">
 
 			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
@@ -56,5 +58,9 @@ $this->params['breadcrumbs'][] = 'Update';
 			<?php ActiveForm::end(); ?>
 
 		</div>
+		
+<?else :?>
+<h3>Вы не можете изменять отзывы других авторов!</h3>		
+<?endif;?>		
 
 </div>

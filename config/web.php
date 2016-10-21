@@ -14,6 +14,7 @@ $config = [
             'class' => 'app\modules\reviews\Module',
 						'layout'=> 'reviews',
 						'defaultRoute' => 'reviews/index',
+						
         ],
 				'users' => [
             'class' => 'app\modules\users\Module',
@@ -55,7 +56,8 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => true,// Если почта не отправляется реально
+            //'useFileTransport' => false,// Если почта отправляется реально
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -72,6 +74,10 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+							'<action>'=>'site/<action>',
+							'reviews/<action>'=>'reviews/reviews/<action>',
+							//'reviews/<id:\d+>' => 'reviews/view',// почему то не сработало
+							'cityes/<action>'=>'cityes/cityes/<action>',
             ],
         ],
        

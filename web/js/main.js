@@ -74,8 +74,8 @@ $(document).ready(function(){
 	}
 	
 	
-	/*Модальное окно для подтверждения ip*/
-	 $('.negative-button').on('click', function(e){
+	/*Модальное окно для отрицания ip*/
+	$('.negative-button').on('click', function(e){
 		e.preventDefault();
 		var city = $(this).data('city')
 		
@@ -93,10 +93,37 @@ $(document).ready(function(){
 			}
 		});
 		
-		
 	}); 
 	
 	
+	
+	
+	
+	
+	/*Рейтинг голосование за отзыв*/
+	$('#send-vote').on('click', function(e){
+		e.preventDefault();
+		var id_review = $('#vote').attr('review-id');// Получили id отзыва
+		var rating = $('input:radio:checked').val();
+		
+		
+		$.ajax({
+			url: '/reviews/reviews/rating',
+			data: {id_review: id_review, rating: rating},
+			type: 'POST',
+			success: function(res){
+						$('#novotes').hide();
+						$('#voterating').hide();
+						$('#form-wrapper').html(res);
+						//console.log(res);
+			},
+			error: function(){
+				alert("Ошибка при голосовании");
+			}
+				
+		});
+		
+	}); 
 	
 	
 });

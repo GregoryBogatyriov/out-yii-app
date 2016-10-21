@@ -26,23 +26,23 @@ $this->title = ' Главная';
 							<h5>Ваш город:  <?=$data[0]['city'] ?> ? </h5>
 							<a href="<?= Url::to(['/cityes/cityes/confirm', 'city'=>$data[0]["city"]])?>" class="btn btn-success confirm-button" style="background: #008000;" data-city="<?=$data[0]['city']?>">Да</a>
 							<a href="<?= Url::to(['/cityes/cityes/negative'])?>" class="btn btn-success negative-button" style="background: #ff4d00;" >Нет</a>
-							<h5>Номеp города: <?= $data[0]['city_id']?></h5>
 						</div>
-						
 						
 					<?php else:?>
 						<h3>Ваш город: <?= $_SESSION['city']?></h3>
 						<a href="<?= Url::to(['/cityes/cityes/negative'])?>" class="btn btn-success negative-button" style="background: #ff4d00;" >Я нахожусь в другом месте!</a>
 					<?php endif;?>
 				<?php else:?>
-					<h5>Ваш город не определён. Выберите город</h5>
+					<div class="alert alert-danger alert-dismissible" role="alert">
+							<h3>Не представляется возможным определить ваш город</h3>
+					</div>
 				<?php endif;?>
+				
+				
+				<?//var_dump ($ip);?>
 		
 		
 				
-				
-			
-			
 			
 			
 			

@@ -2667,3 +2667,9 @@ span.color-red {
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
 }
+
+.rating-container .star{
+	margin-bottom: 30px;
+	margin-top: 30px;
+	padding-top: 20px;
+}

@@ -62,6 +62,9 @@ LtAppAsset::register($this);
 						</li>
 					<?php } else {?>
 						<li class="pull-right">
+							<a href="<?= Url::to(['/reviews/reviews/index']);?>"><strong>Отзывы</strong></a>
+						</li>
+						<li class="pull-right">
 							<a href="<?= Url::to(['/site/login']);?>"><strong>Залогиниться</strong></a>
 						</li>
 						<li class="pull-right">
@@ -77,20 +80,8 @@ LtAppAsset::register($this);
 		</div>
 
       <div class="container">
-				<!--Пропишем условие, при котором будет выводиться флэш-сообщение о передаче информации о заказе на сервер или об ошибке-->
-				<?php if( Yii::$app->session->hasFlash('success') ): ?>
-						<div class="alert alert-success alert-dismissible" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<?php echo Yii::$app->session->getFlash('success'); ?>
-						</div>
-				<?php endif;?>
-				<!--Если ошибка, то:-->
-				<?php if( Yii::$app->session->hasFlash('error') ): ?>
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <?php echo Yii::$app->session->getFlash('error'); ?>
-        </div>
-    <?php endif;?>
+				
+				
 				
 				<?= $content;?>
 			</div>
@@ -104,19 +95,19 @@ LtAppAsset::register($this);
 		    			<h3>Our Latest Work</h3>
 		    			<div class="portfolio-item">
 							<div class="portfolio-image">
-								<a href="page-portfolio-item.html"><img src="/images/portfolio6.jpg" alt="Project Name"></a>
+								<a href="#"><img src="/images/portfolio6.jpg" alt="Project Name"></a>
 							</div>
 						</div>
 		    		</div>
 		    		<div class="col-footer col-md-3 col-xs-6">
 		    			<h3>Navigate</h3>
 		    			<ul class="no-list-style footer-navigate-section">
-		    				<li><a href="page-blog-posts.html">Blog</a></li>
-		    				<li><a href="page-portfolio-3-columns-2.html">Portfolio</a></li>
-		    				<li><a href="page-products-3-columns.html">eShop</a></li>
-		    				<li><a href="page-services-3-columns.html">Services</a></li>
-		    				<li><a href="page-pricing.html">Pricing</a></li>
-		    				<li><a href="page-faq.html">FAQ</a></li>
+		    				<li><a href="#">Blog</a></li>
+		    				<li><a href="#">Portfolio</a></li>
+		    				<li><a href="#">eShop</a></li>
+		    				<li><a href="#">Services</a></li>
+		    				<li><a href="#">Pricing</a></li>
+		    				<li><a href="#">FAQ</a></li>
 		    			</ul>
 		    		</div>
 		    		
@@ -126,7 +117,7 @@ LtAppAsset::register($this);
 	        				<b>Address:</b> 123 Fake Street, LN1 2ST, London, United Kingdom<br/>
 	        				<b>Phone:</b> +44 123 654321<br/>
 	        				<b>Fax:</b> +44 123 654321<br/>
-	        				<b>Email:</b> <a href="mailto:getintoutch@yourcompanydomain.com">getintoutch@yourcompanydomain.com</a>
+	        				<b>Email:</b> <a href="#">getintoutch@yourcompanydomain.com</a>
 	        			</p>
 		    		</div>
 		    		<div class="col-footer col-md-2 col-xs-6">
@@ -144,8 +135,9 @@ LtAppAsset::register($this);
 		    		</div>
 		    	</div>
 		    </div>
-	    </div><!--/footer-->
+	    </div><!--/ Footer -->
 			
+			<!--Модальное окно для контактов автора-->
 			<?php
 				Modal::begin([
 					
@@ -156,6 +148,20 @@ LtAppAsset::register($this);
 				
 				Modal::end();
 			?>
+			
+			<!--Модальное окно для вывода результата голосования-->
+			<?php
+				Modal::begin([
+					
+					'header'=> '<h2>Голосование</h2>',
+					'id'=> 'rating',
+					'footer'=>' <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>',
+				]);
+				
+				Modal::end();
+			?>
+			
+			
         
 		<?php $this->endBody() ?>
     </body>

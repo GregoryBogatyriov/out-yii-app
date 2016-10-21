@@ -13,6 +13,7 @@ use app\models\RegForm;
 use app\models\ContactForm;
 use app\models\Reviews;
 use app\models\User;
+use app\modules\users\models\Users;
 
 class SiteController extends Controller
 {
@@ -68,7 +69,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $user = Users::findOne(['username'=>Yii::$app->user-> identity['username']]);
+				
+				
+				return $this->render('index', compact('user'));
     }
 		
 		
@@ -162,6 +166,13 @@ class SiteController extends Controller
 			
 			if ($model-> load(Yii::$app->request -> post()) && $model-> validate()){
 				if ($user = $model-> reg()){
+					$message = "Вы успешно зарегистрировались";
+					Yii::$app-> mailer-> compose('confirmation', ['message'=> $message])
+											->setFrom('test@mail.ru')
+											->setTo($model->email)
+											->setSubject('Подтверждение регистрации')
+											->send();
+					Yii::$app->session-> setFlash('success', '<h4>Вы успешно зарегистрированы! Зайдите в свой аккаунт</h4>');
 					return $this-> goHome();
 				}else {
 					Yii::$app-> session-> setFlash('error','Возникла ошибка при регистрации');
