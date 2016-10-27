@@ -73,7 +73,7 @@ class ReviewsController extends AppReviewsController
 			endif;
 			
 			
-			/*Если в БД не найдено оценки автора к даннгому отзыву*/
+			/*Если в БД не найдено оценки автора к данному отзыву*/
 			if (!isset($query)):
 				/*Приводим к целому числу*/
 				$rate = (int)$rate; 
@@ -83,11 +83,11 @@ class ReviewsController extends AppReviewsController
 				$rating = new Rating();
 				
 				if (($id_review) && ($id_author) && ($id_review != 0) && ($id_author != 0) && ($rate !=0)):
-				/*Сохраняем в БД*/
-				$rating->id_review = $id_review;
-				$rating->id_author = $id_author;
-				$rating->rating = $rate;
-				$rating-> save();
+					/*Сохраняем в БД*/
+					$rating->id_review = $id_review;
+					$rating->id_author = $id_author;
+					$rating->rating = $rate;
+					$rating-> save();
 				endif;
 				
 				if (($id_review) && ($id_author) && ($id_review != 0) && ($id_author != 0) && ($rate !=0)):
@@ -253,6 +253,64 @@ class ReviewsController extends AppReviewsController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+		
+		
+		/*ЗВЁЗДНЫЙ РЕЙТИНГ*/
+		public function actionStars(){
+			if (!Yii::$app->user-> isGuest):
+				/*Переменные, которые пришли из АЯКСа*/
+				$review_id = Yii::$app-> request-> post('review_id');
+				$value = Yii::$app-> request-> post('value');
+				
+				$author_name = Yii::$app->user-> identity['username'];
+				$author = Users::findOne(['username'=>$author_name]);// Имя автора
+				$id_author = $author->id;
+			endif;
+			
+			
+			/*Ищем оценку данного автора к данному отзыву*/
+			if(isset($review_id) && isset($id_author) && isset($value)):
+				$query = Rating::findOne(['id_author'=>$id_author, 'id_review'=>$review_id]);
+			endif;
+			
+			/*Если в БД не найдено оценки автора к данному отзыву*/
+			if (!isset($query)):
+				/*Приводим к целому числу*/
+				$value = (int)$value; 
+				$review_id = (int)$review_id; 
+				$id_author = (int)$id_author; 
+				/*Объект модели*/
+				$rating = new Rating();
+				
+				if (($review_id) && ($id_author) && ($review_id != 0) && ($id_author != 0) && ($value !=0)):
+					/*Сохраняем в БД*/
+					$rating->id_review = $review_id;
+					$rating->id_author = $id_author;
+					$rating->rating = $value;
+					$rating-> save();
+				endif;
+				
+				if (($review_id) && ($id_author) && ($review_id != 0) && ($id_author != 0) && ($value !=0)):
+					Yii::$app->session-> setFlash('success', 'Вы проголосовали!');
+				else:
+					Yii::$app->session-> setFlash('error', 'Вы что-то забыли указать!');
+				endif;
+				
+				echo "<div class='alert alert-success alert-dismissible' role='alert'>
+							<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+							Спасибо за Вашу оценку отзыва!
+					</div>";
+			elseif(isset($query)):
+				Yii::$app->session-> setFlash('error', 'Вы уже ставили оценку данному отзыву!');
+				echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+							<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+							Вы уже ставили оценку данному отзыву
+					</div>";
+			endif;
+			
+			
+			return $this-> renderPartial('stars', compact('review_id','value', 'id_author' ));
+		}
 		
 		
 		

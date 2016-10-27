@@ -10,10 +10,11 @@ use yii\captcha\Captcha;
 use yii\captcha\CaptchaAction;
 
 $this->title = ' Регистрация';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-reg container">
-    <h1><?= Html::encode($this->title) ?></h1>
+	<?php if(Yii::$app->user->isGuest):?>
+		<h1><?= Html::encode($this->title) ?></h1>
 		
 
     <?php $form = ActiveForm::begin([
@@ -43,5 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
+		<h4>Либо, если вы не до конца прошли процедуру регистрации через email, то перейдите по ссылке:</h4>
+		
+	<?php else:?>
+			<div class="alert alert-danger alert-dismissible" role="alert">
+					<h2>Вы уже являетесь зарегистрированным пользователем!</h2>
+			</div>
+	<?php endif;?>
 </div>

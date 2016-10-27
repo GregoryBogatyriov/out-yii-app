@@ -22,7 +22,7 @@ class AppReviewsController extends Controller
                         'roles' => ['@'],
 												'actions'=> [
 													'delete'=> ['POST'],
-													'index', 'view', '_view', 'view_index', 'update', '_index', 'delete', 'authorreviews', 'create', 'contactmodal', 'rating'
+													'index', 'view', '_view', 'view_index', 'update', '_index', 'delete', 'authorreviews', 'create', 'contactmodal', 'rating', 'stars'
 												],
 												
                     ],

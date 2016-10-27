@@ -3,38 +3,35 @@
 namespace app\models;
 
 use Yii;
-use \yii\web\IdentityInterface;
-use \yii\behaviors\TimestampBehavior;
+use yii\web\IdentityInterface;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 //use app\db\ActiveRecord;
 
-class User extends \yii\db\ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
 		public static function tableName(){
 			return 'users';
 		}
 
-    /* private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ]; */
+    
 
-		/*Поведение, заполняет текущее время*/
+		/*Поведение, заполняет текущее время в таблице*/
 		public function behaviors(){
 			return [
-				TimestampBehavior::className()
+				[
+					'class'=> TimestampBehavior::className(),
+					'attributes'=>[
+						ActiveRecord::EVENT_BEFORE_INSERT => [
+							'created_at', 'updated_at'],
+						ActiveRecord::EVENT_BEFORE_UPDATE => [
+							'updated_at'],
+					],
+					//если вместо unix используеися datetime:
+					//'value'= new Expression('NOW()'),
+				],
+				
 			];
 		}
 		

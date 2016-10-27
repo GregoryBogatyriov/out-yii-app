@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\User;
 
 /**
  * LoginForm is the model behind the login form.
@@ -16,6 +17,8 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+    public $token;
+    public $token_confirm;
 
     private $_user = false;
 
@@ -34,16 +37,6 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
         ];
     }
-		
-		public function attributeLabels(){
-			return [
-				'username'=> 'Логин',
-				'password'=> 'Пароль',
-				'rememberMe'=> 'Запомнить',
-				
-			];
-			
-		}
 
     /**
      * Validates the password.
@@ -58,29 +51,29 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Неверные имя пользователя или пароль.');
+                $this->addError($attribute, 'Incorrect username or password.');
             }
         }
     }
 
     /**
      * Logs in a user using the provided username and password.
-     * @return boolean whether the user is logged in successfully
+     * @return bool whether the user is logged in successfully
      */
     public function login()
     {
-        if ($this->validate() ) {
-            if ($this -> rememberMe){
-							$u = $this-> getUser();
-							$u->generateAuthKey();
-							$u->save();
-						}	
-							return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-						
-						
-        }
-        return false;
+        $user = User::find()->where(['username'=>$this->username])->one();
+				
+				if ($this->validate() && ($user->status == 'Зареган') && !empty($user->token) && ($user->token == $user->token_confirm)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        }else{
+					return false;
+				}
+        
     }
+		
+		
+		
 
     /**
      * Finds user by [[username]]

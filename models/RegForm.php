@@ -17,6 +17,7 @@ class RegForm extends Model
     public $email;
     public $password;
     public $phone;
+    public $token;
     public $captcha;
 		
 		public $backColor;
@@ -65,12 +66,15 @@ class RegForm extends Model
 			
 		}
 		
+		/*Функция для записи данных из формы в таблицу БД*/
 		public function reg(){
 			
 			$user = new User();
 			$user-> username = $this->username;
 			$user-> email = $this-> email;
 			$user-> phone = $this-> phone;
+			$user-> status = "Не зареган";
+			$user-> token = Yii::$app->security->generateRandomString();
 			
 			$user->setPassword($this->password);
 			$user->generateAuthKey();

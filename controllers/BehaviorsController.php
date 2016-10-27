@@ -28,6 +28,13 @@ class BehaviorsController extends Controller {
                         'verbs' => ['GET', 'POST'],
                         'roles' => ['?']
                     ],
+										/* [
+                        'allow' => true,
+                        'controllers' => ['site'],
+                        'actions' => ['reg', 'login', 'activate-account'],
+                        'verbs' => ['GET', 'POST'],
+                        'roles' => ['@']
+                    ], */
                 ]
             ],
         ];

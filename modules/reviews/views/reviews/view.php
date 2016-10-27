@@ -97,10 +97,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				<?if (!Yii::$app->user->isGuest):?>
 				
-				<div id="voterating"><h3> Поставьте оценку отзыву</h3></div>
+				<div id="voterating"><h3> Поставьте оценку отзыву от 1 до 5</h3></div>
 				
-				<!--Радио-кнопки. В обработчик идут переменные id_review и rating-->
-				<div id="form-wrapper">
+				<!--Радио-кнопки. В обработчик идут переменные id_review и rating. Чтобы не громоздить, делаем этот блок скрытым-->
+				<div id="form-wrapper" style="display: none;">
 					<form style="margin-top: 40px;" id="vote" method="post" action="/reviews/reviews/rating" review-id="<?=$model->id?>">
 						
 						 <input type="radio" class="rating-vote"  name="rating" value="1">1
@@ -119,8 +119,55 @@ $this->params['breadcrumbs'][] = $this->title;
 									<p><h3>Гости не могут ставить оценки</h3></p>
 					</div>
 				<?endif?>
-				
-				
+							
+<!--Звёздный рейтинг-->		
+<div id="stars" review-id="<?=$model->id?>">
+<?php
+ echo StarRating::widget([
+                        'name' => 'rating_1',
+                        'model' => $institution,
+                        'attribute' => 'rating',
+                        'value' => $count>0 ? round($sum / $count, 2) : round($sum / 1, 2),
+                        'pluginOptions' => [
+                            //'disabled'=>true,
+                            //'displayOnly' => true,//звезды только для показа, но не активны
+                            'theme' => 'krajee-svg',
+                            'stars' => 5,
+                            'step' => 1 ,
+                            'min' => 0,
+                            'max' => 5,
+                           'disabled' => Yii::$app->user->isGuest ? true : false,//для гостя блокируем кнопки
+                            'showClear' => false,// (знак "кирпич")
+                            'showCaption' => true,//без подписи количества выбранных
+                            'size' => 'xs',//mili
+                            'defaultCaption' => 'оценка {rating}',
+                            'starCaptions' => [
+                                0 => 'Extremely Poor',
+                                1 => 'оценка 1',
+                                2 => 'оценка 2',
+                                3 => 'оценка 3',
+                                4 => 'оценка 4',
+                                5 => 'оценка 5',
+                            ],
+                        ],
+                        'pluginEvents' => [
+													'rating.change'=> "function(event,value, caption){
+														//console.log(caption, value )
+														var review_id = $('#stars').attr('review-id');
+														
+														
+														$.ajax({
+															type: 'POST',
+															url: '/reviews/reviews/stars',
+															data: {'value': value, 'review_id': review_id},
+															 success: function(data){
+																	$('#stars').html(data)
+															 }
+														})
+													}"
+												],
+                    ]);
+?>
 
 
 
